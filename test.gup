@@ -1,3 +1,0 @@
-#!bash -eu
-jbuilder build test_src/test.exe
-_build/default/test_src/test.exe

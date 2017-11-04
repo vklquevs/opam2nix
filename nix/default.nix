@@ -20,15 +20,22 @@ stdenv.mkDerivation {
 	inherit src;
 	# unpackCmd = "tar xzf $src";
     dontMakeSourcesWritable = true;
-	buildPhase = "gup all";
+	buildPhase = ''
+        jbuilder build @install
+    '';
+    testPhase = ''
+        jbuilder build test_src/test.exe
+        _build/default/test_src/test.exe
+    '';
 	installPhase = ''
 		mkdir $out
-		cp -r --dereference bin $out/bin
+		cp -r --dereference _build/install/default/bin $out/bin
 		wrapProgram $out/bin/opam2nix \
 			--prefix PATH : "${localPackages.aspcud}/bin" \
 			--prefix PATH : "${pkgs.nix.out}/bin" \
 		;
 	'';
+
 	passthru = {
 		format_version = import ./format_version.nix;
 		pkgs = localPackages;
@@ -43,7 +50,6 @@ stdenv.mkDerivation {
 		yojson
 		fileutils
 		basedir
-		gup
 		ounit
 		makeWrapper
 		jbuilder
