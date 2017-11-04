@@ -6,7 +6,8 @@ stdenv.mkDerivation {
 		sha256 = "00yvyfm4j423zqndvgc1ycnmiffaa2l9ab40cyg23pf51qmzk2jm";
 	};
 	buildInputs = [ocaml findlib camlp4 ocaml_extlib cudf ocamlgraph cppo re perl ];
-	# configureFlags = "--with-ocamlgraph";
+    configurePhase = "env OCAMLLIB=$OCAMLPATH ./configure";
+    installFlags = "BINDIR=$(out)/bin";
 	createFindlibDestdir = true;
 	patchPhase = ''
 		sed -i 's@$(LIBDIR)@$(OCAMLFIND_DESTDIR)@' Makefile.config.in

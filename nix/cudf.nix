@@ -7,6 +7,7 @@ stdenv.mkDerivation {
 	};
 	buildInputs = [ocaml findlib camlp4 ocaml_extlib perl];
 	buildPhase = "make all opt";
+    installFlags = "DESTDIR=$(out) OCAMLLIBDIR=lib/ocaml/4.02.3/site-lib/";
 	createFindlibDestdir = true;
 }
 
