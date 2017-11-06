@@ -18,8 +18,6 @@ with localPackages; with localPackages.ocamlPackages;
 stdenv.mkDerivation {
 	name = "opam2nix-${lib.removeSuffix "\n" (builtins.readFile ../VERSION)}";
 	inherit src;
-	# unpackCmd = "tar xzf $src";
-    dontMakeSourcesWritable = true;
 	buildPhase = ''
         jbuilder build @install
     '';
